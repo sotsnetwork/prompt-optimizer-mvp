@@ -6,13 +6,8 @@ import { AppSidebar } from "@/components/AppSidebar";
 import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
 import { ThemeToggle } from "@/components/ThemeToggle";
 
-const leaderboardData = [
-  { rank: 1, name: "Alex Chen", score: 98.5, optimizations: 342, level: "Expert" },
-  { rank: 2, name: "Sarah Kim", score: 96.2, optimizations: 298, level: "Expert" },
-  { rank: 3, name: "Mike Johnson", score: 94.8, optimizations: 256, level: "Advanced" },
-  { rank: 4, name: "Emily Davis", score: 92.1, optimizations: 203, level: "Advanced" },
-  { rank: 5, name: "David Wilson", score: 89.3, optimizations: 178, level: "Intermediate" },
-];
+// Empty leaderboard data - will be populated with real user signups
+const leaderboardData: any[] = [];
 
 const getRankIcon = (rank: number) => {
   switch (rank) {
@@ -67,8 +62,8 @@ export default function Leaderboard() {
                     <Star className="h-4 w-4 text-muted-foreground" />
                   </CardHeader>
                   <CardContent>
-                    <div className="text-2xl font-bold">1,247</div>
-                    <p className="text-xs text-muted-foreground">+12% from last month</p>
+                    <div className="text-2xl font-bold">0</div>
+                    <p className="text-xs text-muted-foreground">No users yet</p>
                   </CardContent>
                 </Card>
                 <Card>
@@ -77,8 +72,8 @@ export default function Leaderboard() {
                     <Trophy className="h-4 w-4 text-muted-foreground" />
                   </CardHeader>
                   <CardContent>
-                    <div className="text-2xl font-bold">45,231</div>
-                    <p className="text-xs text-muted-foreground">+8% from last month</p>
+                    <div className="text-2xl font-bold">0</div>
+                    <p className="text-xs text-muted-foreground">No optimizations yet</p>
                   </CardContent>
                 </Card>
                 <Card>
@@ -87,8 +82,8 @@ export default function Leaderboard() {
                     <Medal className="h-4 w-4 text-muted-foreground" />
                   </CardHeader>
                   <CardContent>
-                    <div className="text-2xl font-bold">87.3</div>
-                    <p className="text-xs text-muted-foreground">+2.1% from last month</p>
+                    <div className="text-2xl font-bold">--</div>
+                    <p className="text-xs text-muted-foreground">No scores yet</p>
                   </CardContent>
                 </Card>
               </div>
@@ -101,41 +96,51 @@ export default function Leaderboard() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <div className="space-y-4">
-                    {leaderboardData.map((user) => (
-                      <div
-                        key={user.rank}
-                        className="flex items-center justify-between p-4 rounded-lg border border-border hover:bg-muted/50 transition-colors"
-                      >
-                        <div className="flex items-center space-x-4">
-                          <div className="flex items-center space-x-2">
-                            {getRankIcon(user.rank)}
-                            <span className="font-semibold text-lg">#{user.rank}</span>
+                  {leaderboardData.length === 0 ? (
+                    <div className="text-center py-12">
+                      <Trophy className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                      <h3 className="text-lg font-medium text-muted-foreground mb-2">No users yet</h3>
+                      <p className="text-sm text-muted-foreground">
+                        The leaderboard will populate as users sign up and start optimizing prompts.
+                      </p>
+                    </div>
+                  ) : (
+                    <div className="space-y-4">
+                      {leaderboardData.map((user) => (
+                        <div
+                          key={user.rank}
+                          className="flex items-center justify-between p-4 rounded-lg border border-border hover:bg-muted/50 transition-colors"
+                        >
+                          <div className="flex items-center space-x-4">
+                            <div className="flex items-center space-x-2">
+                              {getRankIcon(user.rank)}
+                              <span className="font-semibold text-lg">#{user.rank}</span>
+                            </div>
+                            <Avatar>
+                              <AvatarFallback>
+                                {user.name.split(' ').map((n: string) => n[0]).join('')}
+                              </AvatarFallback>
+                            </Avatar>
+                            <div>
+                              <p className="font-medium">{user.name}</p>
+                              <p className="text-sm text-muted-foreground">
+                                {user.optimizations} optimizations
+                              </p>
+                            </div>
                           </div>
-                          <Avatar>
-                            <AvatarFallback>
-                              {user.name.split(' ').map(n => n[0]).join('')}
-                            </AvatarFallback>
-                          </Avatar>
-                          <div>
-                            <p className="font-medium">{user.name}</p>
-                            <p className="text-sm text-muted-foreground">
-                              {user.optimizations} optimizations
-                            </p>
+                          <div className="flex items-center space-x-4">
+                            <Badge className={getLevelColor(user.level)}>
+                              {user.level}
+                            </Badge>
+                            <div className="text-right">
+                              <p className="font-semibold text-lg">{user.score}</p>
+                              <p className="text-sm text-muted-foreground">score</p>
+                            </div>
                           </div>
                         </div>
-                        <div className="flex items-center space-x-4">
-                          <Badge className={getLevelColor(user.level)}>
-                            {user.level}
-                          </Badge>
-                          <div className="text-right">
-                            <p className="font-semibold text-lg">{user.score}</p>
-                            <p className="text-sm text-muted-foreground">score</p>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
+                      ))}
+                    </div>
+                  )}
                 </CardContent>
               </Card>
             </div>

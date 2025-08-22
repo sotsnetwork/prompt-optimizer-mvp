@@ -1,1 +1,4 @@
 project_id = "dqbchlyqpzpelfcwkigs"
+
+[functions.optimize-prompt]
+verify_jwt = false
