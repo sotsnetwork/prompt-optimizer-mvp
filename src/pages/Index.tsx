@@ -1,10 +1,6 @@
 
 import { useState } from "react";
-import { Sparkles, Copy, Check } from "lucide-react";
-import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
-import { AppSidebar } from "@/components/AppSidebar";
-import { ThemeToggle } from "@/components/ThemeToggle";
-import { PromptCard } from "@/components/PromptCard";
+import { Send, Copy, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { supabase } from "@/integrations/supabase/client";
@@ -65,107 +61,123 @@ const Index = () => {
     }
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      handleOptimize();
+    }
+  };
+
   return (
-    <SidebarProvider>
-      <div className="flex h-screen bg-background">
-        <AppSidebar />
-        <SidebarInset className="flex-1">
-          <header className="flex h-20 shrink-0 items-center justify-between border-b border-sidebar-border/50 px-8">
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg"></div>
-              <h1 className="text-xl font-semibold text-foreground">Prompt Optimizer</h1>
-            </div>
-            <ThemeToggle />
-          </header>
+    <div className="min-h-screen bg-white dark:bg-gray-900 flex flex-col">
+      {/* Header */}
+      <header className="border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
+        <div className="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <img 
+              src="/lovable-uploads/722b49e2-7cef-4586-9667-7a7af907dd8a.png" 
+              alt="Logo" 
+              className="w-8 h-8"
+            />
+            <h1 className="text-xl font-semibold text-gray-900 dark:text-white">Prompt Optimizer</h1>
+          </div>
+        </div>
+      </header>
 
-          
-          <main className="flex-1 overflow-auto relative">
-            {/* Subtle background pattern */}
-            <div className="absolute inset-0 opacity-[0.02] pointer-events-none">
-              <div className="absolute inset-0" style={{
-                backgroundImage: `radial-gradient(circle at 1px 1px, currentColor 1px, transparent 0)`,
-                backgroundSize: '24px 24px'
-              }}></div>
-            </div>
-            
-            <div className="h-full flex flex-col justify-center items-center relative z-10 px-8">
-              <div className="w-full max-w-4xl space-y-8">
-                <div className="text-center space-y-3">
-                  <h1 className="text-4xl font-bold text-foreground bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                    AI Prompt Optimizer
-                  </h1>
-                  <p className="text-lg text-muted-foreground">
-                    Transform your prompts into more effective, precise instructions for better AI results
-                  </p>
-                </div>
-
+      {/* Main Content */}
+      <main className="flex-1 flex flex-col">
+        <div className="flex-1 flex flex-col max-w-4xl mx-auto w-full">
+          {/* Chat Area */}
+          <div className="flex-1 overflow-auto p-4 space-y-6">
+            {!optimizedPrompt ? (
+              <div className="flex flex-col items-center justify-center h-full text-center space-y-4">
+                <img 
+                  src="/lovable-uploads/722b49e2-7cef-4586-9667-7a7af907dd8a.png" 
+                  alt="Logo" 
+                  className="w-16 h-16 opacity-20"
+                />
+                <h2 className="text-2xl font-medium text-gray-900 dark:text-white">
+                  How can I optimize your prompt today?
+                </h2>
+                <p className="text-gray-600 dark:text-gray-400 max-w-md">
+                  Paste your prompt below and I'll help you make it more effective and precise.
+                </p>
+              </div>
+            ) : (
               <div className="space-y-6">
-                <div className="relative">
-                  <Textarea
-                    placeholder="Enter your raw prompt here..."
-                    value={rawPrompt}
-                    onChange={(e) => setRawPrompt(e.target.value)}
-                    className="min-h-[400px] resize-none text-lg p-8 border-2 border-border/50 focus:border-primary/50 transition-all duration-200 rounded-2xl shadow-sm bg-background/50 backdrop-blur-sm"
-                  />
-                  <div className="absolute bottom-6 right-6 text-sm text-muted-foreground bg-background/90 px-3 py-1 rounded-full border">
-                    {rawPrompt.length} characters
+                {/* User Input */}
+                <div className="flex gap-4">
+                  <div className="w-8 h-8 rounded-full bg-gray-300 dark:bg-gray-600 flex-shrink-0"></div>
+                  <div className="flex-1">
+                    <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
+                      <p className="text-gray-900 dark:text-white whitespace-pre-wrap">{rawPrompt}</p>
+                    </div>
                   </div>
                 </div>
-                
-                <Button 
+
+                {/* AI Response */}
+                <div className="flex gap-4">
+                  <img 
+                    src="/lovable-uploads/722b49e2-7cef-4586-9667-7a7af907dd8a.png" 
+                    alt="AI" 
+                    className="w-8 h-8 rounded-full flex-shrink-0"
+                  />
+                  <div className="flex-1">
+                    <div className="space-y-3">
+                      <div className="prose dark:prose-invert max-w-none">
+                        <p className="text-gray-900 dark:text-white whitespace-pre-wrap">{optimizedPrompt}</p>
+                      </div>
+                      <div className="flex gap-2">
+                        <Button
+                          onClick={handleCopyOptimized}
+                          variant="ghost"
+                          size="sm"
+                          className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
+                        >
+                          {copiedOptimized ? (
+                            <Check className="h-4 w-4" />
+                          ) : (
+                            <Copy className="h-4 w-4" />
+                          )}
+                          {copiedOptimized ? "Copied!" : "Copy"}
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Input Area */}
+          <div className="border-t border-gray-200 dark:border-gray-700 p-4">
+            <div className="relative max-w-4xl mx-auto">
+              <div className="relative flex items-end gap-3 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+                <Textarea
+                  placeholder="Message Prompt Optimizer..."
+                  value={rawPrompt}
+                  onChange={(e) => setRawPrompt(e.target.value)}
+                  onKeyDown={handleKeyDown}
+                  className="min-h-[52px] max-h-[200px] resize-none border-0 bg-transparent focus:ring-0 focus:border-0 text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400"
+                  style={{ boxShadow: 'none' }}
+                />
+                <Button
                   onClick={handleOptimize}
                   disabled={isOptimizing || !rawPrompt.trim()}
-                  className="w-full h-16 text-xl font-semibold bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 transition-all duration-200 shadow-lg hover:shadow-xl rounded-2xl"
-                  size="lg"
+                  size="sm"
+                  className="m-2 h-8 w-8 p-0 bg-gray-900 hover:bg-gray-700 dark:bg-white dark:hover:bg-gray-200 text-white dark:text-gray-900 disabled:opacity-50 disabled:cursor-not-allowed rounded-md"
                 >
-                  <Sparkles className="mr-3 h-7 w-7" />
-                  {isOptimizing ? "Optimizing..." : "Optimize Prompt"}
+                  <Send className="h-4 w-4" />
                 </Button>
               </div>
-
-              {optimizedPrompt && (
-                <div className="grid gap-6 md:grid-cols-2">
-                  <div className="bg-card border-2 border-border/50 rounded-xl p-6 shadow-sm">
-                    <h3 className="text-lg font-semibold text-foreground mb-3 flex items-center gap-2">
-                      <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
-                      Raw Prompt
-                    </h3>
-                    <div className="min-h-[150px] p-4 bg-muted/30 rounded-lg text-muted-foreground text-sm">
-                      {rawPrompt || "Your original prompt will appear here..."}
-                    </div>
-                  </div>
-                  
-                  <div className="bg-card border-2 border-border/50 rounded-xl p-6 shadow-sm relative">
-                    <h3 className="text-lg font-semibold text-foreground mb-3 flex items-center gap-2">
-                      <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                      Optimized Prompt
-                    </h3>
-                    <div className="min-h-[150px] p-4 bg-muted/30 rounded-lg text-muted-foreground text-sm">
-                      {optimizedPrompt || "Your optimized prompt will appear here..."}
-                    </div>
-                    {optimizedPrompt && (
-                      <Button
-                        onClick={handleCopyOptimized}
-                        variant="outline"
-                        size="sm"
-                        className="absolute top-6 right-6"
-                      >
-                        {copiedOptimized ? (
-                          <Check className="h-4 w-4" />
-                        ) : (
-                          <Copy className="h-4 w-4" />
-                        )}
-                      </Button>
-                    )}
-                  </div>
-                </div>
-                             )}
-             </div>
-           </div>
-         </main>
-        </SidebarInset>
-      </div>
-    </SidebarProvider>
+              <p className="text-xs text-gray-500 dark:text-gray-400 text-center mt-2">
+                Prompt Optimizer can make mistakes. Check important info.
+              </p>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
   );
 };
 
