@@ -332,8 +332,8 @@ export default function Benchmarks() {
                         </CardContent>
                       </Card>
                     ))}
-                    )}
-                  </div>
+                    </div>
+                  )}
                 </TabsContent>
 
                 <TabsContent value="test" className="space-y-6">
