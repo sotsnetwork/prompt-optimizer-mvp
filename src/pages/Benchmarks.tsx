@@ -49,6 +49,8 @@ interface PromptBenchmark {
 const mockBenchmarks: PromptBenchmark[] = [];
 
 const models = [
+  { id: "gpt-5", name: "GPT-5", provider: "OpenAI" },
+  { id: "gpt-4o", name: "GPT-4o", provider: "OpenAI" },
   { id: "gpt-4", name: "GPT-4", provider: "OpenAI" },
   { id: "gpt-3.5-turbo", name: "GPT-3.5 Turbo", provider: "OpenAI" },
   { id: "claude-3", name: "Claude-3", provider: "Anthropic" },
@@ -147,7 +149,7 @@ export default function Benchmarks() {
                   </div>
                   <div className="flex items-center gap-2">
                     <Zap className="h-4 w-4" />
-                    <span>7 AI models</span>
+                    <span>9 AI models</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <Star className="h-4 w-4" />
