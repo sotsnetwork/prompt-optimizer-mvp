@@ -142,7 +142,11 @@ const SettingsPage = () => {
         <SidebarInset className="flex-1">
           <header className="flex h-20 shrink-0 items-center justify-between border-b border-sidebar-border/50 px-8">
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg"></div>
+              <img 
+                src="/lovable-uploads/722b49e2-7cef-4586-9667-7a7af907dd8a.png" 
+                alt="Prompt Optimizer Logo" 
+                className="w-8 h-8 object-cover rounded-lg"
+              />
               <h1 className="text-xl font-semibold text-foreground">Settings</h1>
             </div>
             <div className="flex items-center gap-4">
