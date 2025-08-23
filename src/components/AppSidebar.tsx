@@ -127,16 +127,14 @@ export function AppSidebar({
               {/* New Chat Button */}
               {onNewChat && (
                 <SidebarMenuItem>
-                  <SidebarMenuButton asChild>
-                    <Button
-                      onClick={onNewChat}
-                      variant="outline"
-                      className="w-full justify-start gap-3 px-3 py-2.5 h-auto bg-primary/10 hover:bg-primary/20 border-primary/20 text-primary hover:text-primary"
-                    >
-                      <Plus className="h-5 w-5 shrink-0" />
-                      {!isCollapsed && <span className="text-sm font-medium">New Chat</span>}
-                    </Button>
-                  </SidebarMenuButton>
+                  <Button
+                    onClick={onNewChat}
+                    variant="outline"
+                    className="w-full justify-start gap-3 px-3 py-2.5 h-auto bg-primary/10 hover:bg-primary/20 border-primary/20 text-primary hover:text-primary"
+                  >
+                    <Plus className="h-5 w-5 shrink-0" />
+                    {!isCollapsed && <span className="text-sm font-medium">New Chat</span>}
+                  </Button>
                 </SidebarMenuItem>
               )}
               
