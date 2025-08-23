@@ -1,7 +1,8 @@
 
 import { useState } from "react";
-import { Trophy, BarChart3, Settings, Sparkles } from "lucide-react";
+import { Trophy, BarChart3, Settings, Sparkles, Plus } from "lucide-react";
 import { NavLink } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 import {
   Sidebar,
   SidebarContent,
@@ -21,7 +22,11 @@ const items = [
   { title: "Settings", url: "/settings", icon: Settings },
 ];
 
-export function AppSidebar() {
+interface AppSidebarProps {
+  onNewChat?: () => void;
+}
+
+export function AppSidebar({ onNewChat }: AppSidebarProps) {
   const { state } = useSidebar();
   const isCollapsed = state === "collapsed";
 
@@ -31,6 +36,22 @@ export function AppSidebar() {
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu>
+              {/* New Chat Button */}
+              {onNewChat && (
+                <SidebarMenuItem>
+                  <SidebarMenuButton asChild>
+                    <Button
+                      onClick={onNewChat}
+                      variant="outline"
+                      className="w-full justify-start gap-3 px-3 py-2.5 h-auto bg-primary/10 hover:bg-primary/20 border-primary/20 text-primary hover:text-primary"
+                    >
+                      <Plus className="h-5 w-5 shrink-0" />
+                      {!isCollapsed && <span className="text-sm font-medium">New Chat</span>}
+                    </Button>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              )}
+              
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
