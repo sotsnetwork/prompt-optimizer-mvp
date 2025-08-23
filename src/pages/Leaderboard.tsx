@@ -270,8 +270,8 @@ export default function Leaderboard() {
                             </Button>
                           </div>
                         ))}
-                        )}
-                      </div>
+                        </div>
+                      )}
                     </CardContent>
                   </Card>
                 </TabsContent>
