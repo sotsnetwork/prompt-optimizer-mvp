@@ -80,9 +80,13 @@ const Index = () => {
           {/* Header */}
           <header className="flex h-16 shrink-0 items-center justify-between border-b border-border px-4 md:px-6">
             <div className="flex items-center gap-3">
-              {!isMobile && (
-                <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg"></div>
-              )}
+                             {!isMobile && (
+                 <img 
+                   src="/lovable-uploads/722b49e2-7cef-4586-9667-7a7af907dd8a.png" 
+                   alt="Prompt Optimizer Logo" 
+                   className="w-8 h-8 rounded-lg object-cover"
+                 />
+               )}
               <h1 className={`font-semibold text-foreground ${isMobile ? 'text-lg ml-12' : 'text-xl'}`}>
                 AI Prompt Optimizer
               </h1>
@@ -98,10 +102,14 @@ const Index = () => {
             {/* Chat Messages */}
             <div className="flex-1 overflow-y-auto p-4 md:p-6">
               {messages.length === 0 ? (
-                <div className="flex flex-col items-center justify-center h-full text-center space-y-4">
-                  <div className="w-16 h-16 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl flex items-center justify-center">
-                    <Sparkles className="w-8 h-8 text-white" />
-                  </div>
+                                 <div className="flex flex-col items-center justify-center h-full text-center space-y-4">
+                   <div className="w-16 h-16 rounded-2xl flex items-center justify-center">
+                     <img 
+                       src="/lovable-uploads/722b49e2-7cef-4586-9667-7a7af907dd8a.png" 
+                       alt="Prompt Optimizer Logo" 
+                       className="w-12 h-12 object-cover"
+                     />
+                   </div>
                   <div className="space-y-2">
                     <h2 className="text-2xl font-semibold text-foreground">
                       Welcome to AI Prompt Optimizer
