@@ -94,14 +94,14 @@ export const SignUpForm = () => {
         </p>
       </div>
 
-      <Button type="submit" disabled={loading} className="w-full">
+      <Button type="submit" disabled={loading} className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-medium transition-all duration-200 shadow-lg hover:shadow-xl">
         {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
         Create account
       </Button>
 
       <div className="text-center text-sm">
         <span className="text-muted-foreground">Already have an account? </span>
-        <Link to="/signin" className="text-primary hover:underline">
+        <Link to="/signin" className="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 hover:underline transition-colors">
           Sign in
         </Link>
       </div>
