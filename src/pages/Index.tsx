@@ -6,7 +6,7 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 import { UserMenu } from "@/components/UserMenu";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { Send, Sparkles, Menu } from "lucide-react";
+import { Send, Sparkles, Menu, Copy, Check } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -28,6 +28,7 @@ const Index = () => {
   const [currentChatId, setCurrentChatId] = useState<string | null>(null);
   const [isEditingTitle, setIsEditingTitle] = useState<string | null>(null);
   const [editTitle, setEditTitle] = useState("");
+  const [copiedMessageId, setCopiedMessageId] = useState<string | null>(null);
   const isMobile = useIsMobile();
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const messagesContainerRef = useRef<HTMLDivElement>(null);
@@ -176,6 +177,25 @@ const Index = () => {
       URL.revokeObjectURL(url);
     } catch (error) {
       console.error('Failed to export chat history:', error);
+    }
+  };
+
+  const handleCopyPrompt = async (content: string, messageId: string) => {
+    try {
+      await navigator.clipboard.writeText(content);
+      setCopiedMessageId(messageId);
+      setTimeout(() => setCopiedMessageId(null), 2000);
+    } catch (error) {
+      console.error('Failed to copy text:', error);
+      // Fallback for older browsers
+      const textArea = document.createElement('textarea');
+      textArea.value = content;
+      document.body.appendChild(textArea);
+      textArea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textArea);
+      setCopiedMessageId(messageId);
+      setTimeout(() => setCopiedMessageId(null), 2000);
     }
   };
 
@@ -387,7 +407,7 @@ This is a temporary mock response. To enable real AI optimization, you'll need t
                       className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
                     >
                       <div
-                        className={`max-w-[90%] md:max-w-[80%] lg:max-w-[70%] p-4 md:p-6 rounded-2xl ${
+                        className={`max-w-[90%] md:max-w-[80%] lg:max-w-[70%] p-4 md:p-6 rounded-2xl relative group ${
                           message.role === 'user'
                             ? 'bg-primary text-primary-foreground'
                             : 'bg-muted text-foreground border border-border'
@@ -396,6 +416,22 @@ This is a temporary mock response. To enable real AI optimization, you'll need t
                         <div className="whitespace-pre-wrap break-words">
                           {message.content}
                         </div>
+                        
+                        {/* Copy Button - Only show for assistant messages (optimized prompts) */}
+                        {message.role === 'assistant' && (
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => handleCopyPrompt(message.content, `msg-${index}`)}
+                            className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 h-8 w-8 p-0"
+                          >
+                            {copiedMessageId === `msg-${index}` ? (
+                              <Check className="h-4 w-4 text-green-600" />
+                            ) : (
+                              <Copy className="h-4 w-4" />
+                            )}
+                          </Button>
+                        )}
                       </div>
                     </div>
                   ))}
