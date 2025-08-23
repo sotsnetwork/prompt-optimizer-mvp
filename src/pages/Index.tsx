@@ -345,12 +345,39 @@ This is a temporary mock response. To enable real AI optimization, you'll need t
                   </div>
                   <div className="space-y-3 max-w-4xl">
                     <h2 className="text-3xl md:text-4xl font-semibold text-foreground">
-                      Welcome to AI Prompt Optimizer
+                      {chatSessions.length > 0 ? 'Welcome back!' : 'Welcome to AI Prompt Optimizer'}
                     </h2>
                     <p className="text-lg text-muted-foreground">
-                      Enter your prompt below and I'll help you optimize it for better AI responses.
+                      {chatSessions.length > 0 
+                        ? `You have ${chatSessions.length} previous chat${chatSessions.length !== 1 ? 's' : ''}. Select one from the sidebar or start a new conversation below.`
+                        : 'Enter your prompt below and I\'ll help you optimize it for better AI responses.'
+                      }
                     </p>
                   </div>
+                  
+                  {/* Show recent chats preview */}
+                  {chatSessions.length > 0 && (
+                    <div className="w-full max-w-4xl mt-8">
+                      <h3 className="text-xl font-semibold mb-4 text-foreground">Recent Chats</h3>
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        {chatSessions.slice(0, 6).map((session) => (
+                          <div
+                            key={session.id}
+                            onClick={() => loadChat(session.id)}
+                            className="p-4 rounded-lg border border-border hover:border-primary/50 cursor-pointer transition-all duration-200 bg-muted/30 hover:bg-muted/50"
+                          >
+                            <h4 className="font-medium text-foreground truncate mb-2">
+                              {session.title}
+                            </h4>
+                            <div className="flex items-center justify-between text-sm text-muted-foreground">
+                              <span>{session.messages.length} message{session.messages.length !== 1 ? 's' : ''}</span>
+                              <span>{formatDate(session.updatedAt)}</span>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
               ) : (
                 <div className="w-full space-y-6 px-4 md:px-8">
