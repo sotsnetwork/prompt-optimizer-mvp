@@ -25,19 +25,31 @@ const Index = () => {
     setMessages(prev => [...prev, userMessage]);
 
     try {
-      const response = await fetch('/api/optimize-prompt', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ prompt }),
-      });
+      // For now, let's use a mock optimization to test the UI
+      // TODO: Replace with actual Supabase function call when API key is configured
+      
+      // Simulate API delay
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      
+      // Mock optimization logic
+      const optimizedPrompt = `Here's an optimized version of your prompt:
 
-      if (response.ok) {
-        const data = await response.json();
-        const assistantMessage = { role: "assistant" as const, content: data.optimizedPrompt };
-        setMessages(prev => [...prev, assistantMessage]);
-      } else {
-        throw new Error('Failed to optimize prompt');
-      }
+"${prompt}"
+
+**Enhanced with:**
+- Clear structure and formatting
+- Specific instructions and context
+- Professional tone and clarity
+- Actionable guidance for better results
+
+This is a temporary mock response. To enable real AI optimization, you'll need to:
+1. Get an AIMLAPI key from https://aimlapi.com
+2. Set it as an environment variable in your Supabase project
+3. Deploy the Edge Function`;
+
+      const assistantMessage = { role: "assistant" as const, content: optimizedPrompt };
+      setMessages(prev => [...prev, assistantMessage]);
+      
     } catch (error) {
       console.error('Optimization error:', error);
       const errorMessage = { 
