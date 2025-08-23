@@ -11,6 +11,9 @@ interface ProtectedRouteProps {
 export const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   const { user, loading } = useAuth();
 
+  // Allow access in development mode for testing
+  const isDevelopment = process.env.NODE_ENV === 'development';
+  
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -19,8 +22,13 @@ export const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
     );
   }
 
-  if (!user) {
+  if (!user && !isDevelopment) {
     return <Navigate to="/signin" replace />;
+  }
+
+  // In development mode, show a warning but allow access
+  if (!user && isDevelopment) {
+    console.warn('Development mode: Bypassing authentication for testing');
   }
 
   return <>{children}</>;
