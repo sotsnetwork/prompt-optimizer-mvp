@@ -70,14 +70,25 @@ const Index = () => {
       <div className="flex h-screen bg-background">
         <AppSidebar />
         <SidebarInset className="flex-1">
-          <header className="flex h-16 shrink-0 items-center justify-between border-b border-sidebar-border px-6">
-            <h1 className="text-xl font-semibold text-foreground">Prompt Optimizer</h1>
+          <header className="flex h-20 shrink-0 items-center justify-between border-b border-sidebar-border/50 px-8">
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg"></div>
+              <h1 className="text-xl font-semibold text-foreground">Prompt Optimizer</h1>
+            </div>
             <ThemeToggle />
           </header>
 
           
-          <main className="flex-1 overflow-auto p-8">
-            <div className="max-w-6xl mx-auto space-y-8">
+          <main className="flex-1 overflow-auto p-8 relative">
+            {/* Subtle background pattern */}
+            <div className="absolute inset-0 opacity-[0.02] pointer-events-none">
+              <div className="absolute inset-0" style={{
+                backgroundImage: `radial-gradient(circle at 1px 1px, currentColor 1px, transparent 0)`,
+                backgroundSize: '24px 24px'
+              }}></div>
+            </div>
+            
+            <div className="max-w-7xl mx-auto space-y-12 relative z-10">
               <div className="text-center space-y-4">
                 <h1 className="text-5xl font-bold text-foreground bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                   AI Prompt Optimizer
