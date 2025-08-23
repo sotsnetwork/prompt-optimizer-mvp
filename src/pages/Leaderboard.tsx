@@ -102,11 +102,11 @@ export default function Leaderboard() {
               <h1 className="text-xl font-semibold text-foreground">Leaderboard</h1>
             </div>
             <div className="flex items-center gap-2">
-              <ThemeToggle />
+            <ThemeToggle />
               <UserMenu />
             </div>
           </header>
-
+          
           <main className="flex-1 overflow-auto p-6">
             <div className="max-w-7xl mx-auto space-y-6">
               {/* Hero Section */}
@@ -121,15 +121,15 @@ export default function Leaderboard() {
                 <div className="flex items-center justify-center gap-4 text-sm text-muted-foreground">
                   <div className="flex items-center gap-2">
                     <Users className="h-4 w-4" />
-                    <span>2,847 active users</span>
+                    <span>0 active users</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <Zap className="h-4 w-4" />
-                    <span>47,892 prompts tested</span>
+                    <span>0 prompts tested</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <Star className="h-4 w-4" />
-                    <span>89% success rate</span>
+                    <span>0% success rate</span>
                   </div>
                 </div>
               </div>
@@ -142,72 +142,25 @@ export default function Leaderboard() {
                 </TabsList>
 
                 <TabsContent value="global" className="space-y-6">
-                  {/* Top 3 Podium */}
-                  <div className="grid grid-cols-3 gap-6 mb-8">
-                    {/* Second Place */}
-                    <div className="text-center space-y-4">
-                      <div className="relative">
-                        <div className="w-24 h-24 mx-auto bg-gradient-to-b from-gray-300 to-gray-400 rounded-full flex items-center justify-center text-4xl">
-                          🥈
-                        </div>
-                        <div className="absolute -top-2 -right-2 w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center text-sm font-bold">
-                          2
-                        </div>
-                      </div>
-                      <div>
-                        <h3 className="font-semibold text-foreground">CreativeCoach</h3>
-                        <p className="text-sm text-muted-foreground">2,653 points</p>
-                        <Badge variant="secondary" className="mt-2">Master</Badge>
-                      </div>
+                                    {/* Top 3 Podium - Only shown when there are actual users */}
+                  {mockLeaderboard.length >= 3 ? (
+                    <div className="grid grid-cols-3 gap-6 mb-8">
+                      {/* This will be populated with real user data when available */}
                     </div>
-
-                    {/* First Place */}
-                    <div className="text-center space-y-4">
-                      <div className="relative">
-                        <div className="w-32 h-32 mx-auto bg-gradient-to-b from-yellow-300 to-yellow-500 rounded-full flex items-center justify-center text-5xl">
-                          👑
-                        </div>
-                        <div className="absolute -top-2 -right-2 w-10 h-10 bg-yellow-400 rounded-full flex items-center justify-center text-sm font-bold">
-                          1
-                        </div>
-                      </div>
-                      <div>
-                        <h3 className="font-semibold text-foreground text-lg">PromptMaster</h3>
-                        <p className="text-sm text-muted-foreground">2,847 points</p>
-                        <Badge className="mt-2 bg-gradient-to-r from-yellow-500 to-orange-500">Grandmaster</Badge>
-                      </div>
-                    </div>
-
-                    {/* Third Place */}
-                    <div className="text-center space-y-4">
-                      <div className="relative">
-                        <div className="w-24 h-24 mx-auto bg-gradient-to-b from-amber-600 to-amber-800 rounded-full flex items-center justify-center text-4xl">
-                          🥉
-                        </div>
-                        <div className="absolute -top-2 -right-2 w-8 h-8 bg-amber-600 rounded-full flex items-center justify-center text-sm font-bold">
-                          3
-                        </div>
-                      </div>
-                      <div>
-                        <h3 className="font-semibold text-foreground">DataWizard</h3>
-                        <p className="text-sm text-muted-foreground">2,489 points</p>
-                        <Badge variant="secondary" className="mt-2">Expert</Badge>
-                      </div>
-                    </div>
-                  </div>
+                  ) : null}
 
                   {/* Full Leaderboard */}
-                  <Card>
-                    <CardHeader>
+              <Card>
+                <CardHeader>
                       <CardTitle className="flex items-center gap-2">
                         <TrendingUp className="h-5 w-5" />
                         Global Rankings
                       </CardTitle>
-                      <CardDescription>
+                  <CardDescription>
                         Top prompt engineers ranked by points, achievements, and community contribution
-                      </CardDescription>
-                    </CardHeader>
-                    <CardContent>
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
                       {mockLeaderboard.length === 0 ? (
                         <div className="text-center py-12 space-y-4">
                           <div className="w-16 h-16 mx-auto bg-muted rounded-full flex items-center justify-center">
@@ -215,16 +168,16 @@ export default function Leaderboard() {
                           </div>
                           <div>
                             <h3 className="text-lg font-semibold text-foreground">No Rankings Yet</h3>
-                            <p className="text-sm text-muted-foreground">
+                      <p className="text-sm text-muted-foreground">
                               Be the first to submit prompts and climb the leaderboard!
-                            </p>
+                      </p>
                           </div>
                           <Button className="mt-4">
                             Submit Your First Prompt
                           </Button>
-                        </div>
-                      ) : (
-                        <div className="space-y-4">
+                    </div>
+                  ) : (
+                    <div className="space-y-4">
                           {mockLeaderboard.map((user, index) => (
                           <div key={user.id} className="flex items-center gap-4 p-4 rounded-lg border border-border hover:bg-muted/50 transition-colors">
                             {/* Rank */}
@@ -237,8 +190,8 @@ export default function Leaderboard() {
                               <Avatar className="w-12 h-12">
                                 <AvatarImage src={user.avatar} />
                                 <AvatarFallback>{user.username.charAt(0).toUpperCase()}</AvatarFallback>
-                              </Avatar>
-                              <div>
+                            </Avatar>
+                            <div>
                                 <h3 className="font-semibold text-foreground">{user.username}</h3>
                                 <div className="flex items-center gap-2 mt-1">
                                   <Badge variant="outline">{user.level}</Badge>
@@ -246,8 +199,8 @@ export default function Leaderboard() {
                                     {user.stats.promptsSubmitted} prompts • {user.stats.totalVotes} votes
                                   </span>
                                 </div>
-                              </div>
                             </div>
+                          </div>
 
                             {/* Badges */}
                             <div className="flex gap-1">
@@ -260,20 +213,20 @@ export default function Leaderboard() {
                             <div className="text-right">
                               <div className="text-2xl font-bold text-foreground">
                                 {user.points.toLocaleString()}
-                              </div>
-                              <div className="text-sm text-muted-foreground">points</div>
                             </div>
+                              <div className="text-sm text-muted-foreground">points</div>
+                          </div>
 
                             {/* Actions */}
                             <Button variant="outline" size="sm">
                               View Profile
                             </Button>
-                          </div>
-                        ))}
                         </div>
-                      )}
-                    </CardContent>
-                  </Card>
+                      ))}
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
                 </TabsContent>
 
                 <TabsContent value="achievements" className="space-y-6">
