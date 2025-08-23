@@ -343,7 +343,7 @@ This is a temporary mock response. To enable real AI optimization, you'll need t
                       className="w-16 h-16 object-cover"
                     />
                   </div>
-                  <div className="space-y-3 max-w-2xl">
+                  <div className="space-y-3 max-w-4xl">
                     <h2 className="text-3xl md:text-4xl font-semibold text-foreground">
                       Welcome to AI Prompt Optimizer
                     </h2>
@@ -353,14 +353,14 @@ This is a temporary mock response. To enable real AI optimization, you'll need t
                   </div>
                 </div>
               ) : (
-                <div className="w-full max-w-6xl mx-auto space-y-6">
+                <div className="w-full space-y-6 px-4 md:px-8">
                   {messages.map((message, index) => (
                     <div
                       key={index}
                       className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
                     >
                       <div
-                        className={`max-w-[85%] md:max-w-[75%] p-4 md:p-6 rounded-2xl ${
+                        className={`max-w-[90%] md:max-w-[80%] lg:max-w-[70%] p-4 md:p-6 rounded-2xl ${
                           message.role === 'user'
                             ? 'bg-primary text-primary-foreground'
                             : 'bg-muted text-foreground border border-border'
@@ -375,7 +375,7 @@ This is a temporary mock response. To enable real AI optimization, you'll need t
                   
                   {isOptimizing && (
                     <div className="flex justify-start">
-                      <div className="max-w-[85%] md:max-w-[75%] p-4 md:p-6 rounded-2xl bg-muted border border-border">
+                      <div className="max-w-[90%] md:max-w-[80%] lg:max-w-[70%] p-4 md:p-6 rounded-2xl bg-muted border border-border">
                         <div className="flex items-center space-x-2">
                           <div className="animate-pulse flex space-x-1">
                             <div className="h-2 w-2 bg-primary rounded-full animate-bounce"></div>
@@ -396,13 +396,13 @@ This is a temporary mock response. To enable real AI optimization, you'll need t
 
             {/* Input Area */}
             <div className="border-t border-border p-4 md:p-8">
-              <div className="w-full max-w-6xl mx-auto">
+              <div className="w-full px-4 md:px-8">
                 <div className="flex flex-col space-y-3">
                   <Textarea
                     placeholder="Enter your prompt here to optimize it..."
                     value={prompt}
                     onChange={(e) => setPrompt(e.target.value)}
-                    className="min-h-[120px] md:min-h-[140px] resize-none border-border focus:ring-2 focus:ring-primary/20"
+                    className="min-h-[140px] md:min-h-[160px] resize-none border-border focus:ring-2 focus:ring-primary/20 w-full text-lg"
                     onKeyDown={(e) => {
                       if (e.key === 'Enter' && !e.shiftKey) {
                         e.preventDefault();
@@ -425,6 +425,13 @@ This is a temporary mock response. To enable real AI optimization, you'll need t
                   </div>
                 </div>
               </div>
+            </div>
+            
+            {/* Disclaimer */}
+            <div className="text-center py-4 border-t border-border">
+              <p className="text-xs text-muted-foreground">
+                AI Prompt Optimizer can make mistakes. Always review and verify important information.
+              </p>
             </div>
           </main>
         </SidebarInset>
