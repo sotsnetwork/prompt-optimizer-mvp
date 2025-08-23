@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { Trophy, BarChart3, Settings, Sparkles, Plus, MessageSquare, Calendar, Trash2, Edit3, MoreHorizontal } from "lucide-react";
+import { Trophy, BarChart3, Settings, Sparkles, Plus, MessageSquare, Calendar, Trash2, Edit3, MoreHorizontal, Search } from "lucide-react";
 import { NavLink } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -64,6 +64,7 @@ export function AppSidebar({
   const isCollapsed = state === "collapsed";
   const [isEditingTitle, setIsEditingTitle] = useState<string | null>(null);
   const [editTitle, setEditTitle] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -93,6 +94,14 @@ export function AppSidebar({
     setIsEditingTitle(null);
     setEditTitle("");
   };
+
+  // Filter chat sessions based on search query
+  const filteredChatSessions = chatSessions.filter(session =>
+    session.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    session.messages.some(message => 
+      message.content.toLowerCase().includes(searchQuery.toLowerCase())
+    )
+  );
 
   return (
     <Sidebar className="border-r border-sidebar-border/50 bg-sidebar/50 backdrop-blur-sm w-64">
@@ -146,7 +155,7 @@ export function AppSidebar({
             <Separator className="my-2" />
             <SidebarGroup className="flex-1">
               <SidebarGroupContent>
-                <div className="px-3 py-2">
+                <div className="px-3 py-2 space-y-2">
                   <div className="flex items-center justify-between">
                     <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
                       Recent Chats
@@ -174,10 +183,29 @@ export function AppSidebar({
                       </DropdownMenu>
                     )}
                   </div>
+                  
+                  {/* Search Input */}
+                  {chatSessions.length > 3 && (
+                    <div className="relative">
+                      <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 h-3 w-3 text-muted-foreground" />
+                      <Input
+                        placeholder="Search chats..."
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        className="h-7 pl-7 text-xs border-border/50"
+                      />
+                    </div>
+                  )}
                 </div>
                 <ScrollArea className="flex-1 px-2">
                   <div className="space-y-1 pb-2">
-                    {chatSessions.map((session) => (
+                    {filteredChatSessions.length === 0 && searchQuery ? (
+                      <div className="text-center py-4 text-muted-foreground">
+                        <p className="text-xs">No chats found</p>
+                        <p className="text-xs">Try a different search term</p>
+                      </div>
+                    ) : (
+                      filteredChatSessions.map((session) => (
                       <div
                         key={session.id}
                         className={`group flex items-center gap-2 p-2 rounded-lg cursor-pointer transition-all duration-200 ${
@@ -250,7 +278,8 @@ export function AppSidebar({
                           </DropdownMenu>
                         </div>
                       </div>
-                    ))}
+                      ))
+                    )}
                   </div>
                 </ScrollArea>
               </SidebarGroupContent>
