@@ -13,7 +13,11 @@ export const AuthLayout = ({ children, title, subtitle }: AuthLayoutProps) => {
       <div className="w-full max-w-md space-y-8">
         <div className="text-center">
           <div className="flex justify-center mb-6">
-            <div className="w-12 h-12 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg"></div>
+            <img 
+              src="/lovable-uploads/722b49e2-7cef-4586-9667-7a7af907dd8a.png" 
+              alt="Prompt Optimizer Logo" 
+              className="w-12 h-12 rounded-lg object-cover"
+            />
           </div>
           <h2 className="text-3xl font-bold tracking-tight text-foreground">
             {title}
