@@ -109,7 +109,14 @@ export function AppSidebar({
         {/* New Chat Button */}
         {onNewChat && (
           <Button
-            onClick={onNewChat}
+            onClick={(e) => {
+              console.log('New Chat button clicked!', e);
+              try {
+                onNewChat();
+              } catch (error) {
+                console.error('Error in onNewChat:', error);
+              }
+            }}
             variant="outline"
             className="w-full justify-start gap-3 px-3 py-2.5 h-auto bg-primary/10 hover:bg-primary/20 border-primary/20 text-primary hover:text-primary"
           >
@@ -122,6 +129,9 @@ export function AppSidebar({
           <NavLink
             key={item.title}
             to={item.url}
+            onClick={(e) => {
+              console.log(`Navigation clicked: ${item.title}`, e);
+            }}
             className={({ isActive }) =>
               `flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200 ${
                 isActive
@@ -198,7 +208,14 @@ export function AppSidebar({
                           ? "bg-accent text-accent-foreground"
                           : "hover:bg-accent/30 text-foreground/70 hover:text-foreground"
                       }`}
-                      onClick={() => onLoadChat?.(session.id)}
+                      onClick={(e) => {
+                        console.log('Chat session clicked:', session.id, e);
+                        try {
+                          onLoadChat?.(session.id);
+                        } catch (error) {
+                          console.error('Error loading chat:', error);
+                        }
+                      }}
                     >
                       <MessageSquare className="h-4 w-4 shrink-0" />
                       <div className="flex-1 min-w-0">
