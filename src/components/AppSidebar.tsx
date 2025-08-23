@@ -106,6 +106,20 @@ export function AppSidebar({
   return (
     <Sidebar className="border-r border-sidebar-border/50 bg-sidebar/50 backdrop-blur-sm w-64">
       <SidebarContent className="flex flex-col h-full">
+        {/* Logo and Title */}
+        <div className="p-4 border-b border-sidebar-border/50">
+          <div className="flex items-center gap-3">
+            <img 
+              src="/lovable-uploads/722b49e2-7cef-4586-9667-7a7af907dd8a.png" 
+              alt="Prompt Optimizer Logo" 
+              className="w-8 h-8 object-cover rounded-lg"
+            />
+            {!isCollapsed && (
+              <h1 className="text-lg font-bold text-foreground">Prompt Optimizer</h1>
+            )}
+          </div>
+        </div>
+        
         {/* Main Navigation */}
         <SidebarGroup>
           <SidebarGroupContent>
