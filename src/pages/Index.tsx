@@ -318,7 +318,7 @@ This is a temporary mock response. To enable real AI optimization, you'll need t
                   Export
                 </Button>
               )}
-              <ThemeToggle />
+            <ThemeToggle />
               <UserMenu />
             </div>
           </header>
@@ -352,9 +352,9 @@ This is a temporary mock response. To enable real AI optimization, you'll need t
                         ? `You have ${chatSessions.length} previous chat${chatSessions.length !== 1 ? 's' : ''}. Select one from the sidebar or start a new conversation below.`
                         : 'Enter your prompt below and I\'ll help you optimize it for better AI responses.'
                       }
-                    </p>
-                  </div>
-                  
+                </p>
+              </div>
+
                   {/* Show recent chats preview */}
                   {chatSessions.length > 0 && (
                     <div className="w-full max-w-4xl mt-8">
@@ -425,7 +425,7 @@ This is a temporary mock response. To enable real AI optimization, you'll need t
             <div className="border-t border-border p-4 md:p-8">
               <div className="w-full px-4 md:px-8">
                 <div className="flex flex-col space-y-3">
-                  <Textarea
+                <Textarea
                     placeholder="Enter your prompt here to optimize it..."
                     value={prompt}
                     onChange={(e) => setPrompt(e.target.value)}
@@ -441,15 +441,15 @@ This is a temporary mock response. To enable real AI optimization, you'll need t
                     <div className="text-xs text-muted-foreground">
                       Press Shift + Enter for new line
                     </div>
-                    <Button 
-                      onClick={handleOptimize} 
+                <Button 
+                  onClick={handleOptimize}
                       disabled={!prompt.trim() || isOptimizing}
                       className="flex items-center gap-2"
-                    >
+                >
                       <Send className="w-4 h-4" />
                       {isOptimizing ? 'Optimizing...' : 'Optimize'}
-                    </Button>
-                  </div>
+                </Button>
+              </div>
                 </div>
               </div>
             </div>
