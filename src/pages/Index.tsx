@@ -159,10 +159,10 @@ const Index = () => {
                     )}
                   </div>
                 </div>
-              )}
-            </div>
-          </div>
-          </main>
+                             )}
+             </div>
+           </div>
+         </main>
         </SidebarInset>
       </div>
     </SidebarProvider>
