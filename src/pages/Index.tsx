@@ -19,6 +19,32 @@ const Index = () => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const messagesContainerRef = useRef<HTMLDivElement>(null);
 
+  // Load saved chats from localStorage on component mount
+  useEffect(() => {
+    try {
+      const savedChats = localStorage.getItem('prompt-optimizer-chats');
+      if (savedChats) {
+        const parsed = JSON.parse(savedChats);
+        if (parsed && Array.isArray(parsed)) {
+          setMessages(parsed);
+        }
+      }
+    } catch (error) {
+      console.error('Failed to load saved chats:', error);
+    }
+  }, []);
+
+  // Save chats to localStorage whenever messages change
+  useEffect(() => {
+    if (messages.length > 0) {
+      try {
+        localStorage.setItem('prompt-optimizer-chats', JSON.stringify(messages));
+      } catch (error) {
+        console.error('Failed to save chats:', error);
+      }
+    }
+  }, [messages]);
+
   // Auto-scroll to bottom when messages change
   useEffect(() => {
     const scrollToBottom = () => {
@@ -34,6 +60,39 @@ const Index = () => {
     const timeoutId = setTimeout(scrollToBottom, 100);
     return () => clearTimeout(timeoutId);
   }, [messages, isOptimizing]);
+
+  const clearChatHistory = () => {
+    setMessages([]);
+    try {
+      localStorage.removeItem('prompt-optimizer-chats');
+    } catch (error) {
+      console.error('Failed to clear chat history:', error);
+    }
+  };
+
+  const exportChatHistory = () => {
+    if (messages.length === 0) return;
+    
+    try {
+      const chatData = {
+        timestamp: new Date().toISOString(),
+        totalMessages: messages.length,
+        conversation: messages
+      };
+      
+      const blob = new Blob([JSON.stringify(chatData, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `prompt-optimizer-chat-${new Date().toISOString().split('T')[0]}.json`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error('Failed to export chat history:', error);
+    }
+  };
 
   const handleOptimize = async () => {
     if (!prompt.trim()) return;
@@ -117,11 +176,38 @@ This is a temporary mock response. To enable real AI optimization, you'll need t
                    className="w-8 h-8 rounded-lg object-cover"
                  />
                )}
-              <h1 className={`font-semibold text-foreground ${isMobile ? 'text-lg ml-12' : 'text-xl'}`}>
-                AI Prompt Optimizer
-              </h1>
+              <div className="flex flex-col">
+                <h1 className={`font-semibold text-foreground ${isMobile ? 'text-lg ml-12' : 'text-xl'}`}>
+                  AI Prompt Optimizer
+                </h1>
+                {messages.length > 0 && (
+                  <span className="text-xs text-muted-foreground">
+                    {messages.length} message{messages.length !== 1 ? 's' : ''} in conversation
+                  </span>
+                )}
+              </div>
             </div>
             <div className="flex items-center gap-2">
+              {messages.length > 0 && (
+                <>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={exportChatHistory}
+                    className="text-xs"
+                  >
+                    Export
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={clearChatHistory}
+                    className="text-xs"
+                  >
+                    Clear
+                  </Button>
+                </>
+              )}
               <ThemeToggle />
               <UserMenu />
             </div>
