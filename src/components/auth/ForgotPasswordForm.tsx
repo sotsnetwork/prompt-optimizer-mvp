@@ -88,7 +88,7 @@ export const ForgotPasswordForm = () => {
         </p>
       </div>
 
-      <Button type="submit" disabled={loading} className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-medium transition-all duration-200 shadow-lg hover:shadow-xl">
+      <Button type="submit" disabled={loading} className="w-full bg-gradient-to-r from-gray-700 to-black hover:from-gray-800 hover:to-gray-900 text-white font-medium transition-all duration-200 shadow-lg hover:shadow-xl">
         {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
         Send reset email
       </Button>
