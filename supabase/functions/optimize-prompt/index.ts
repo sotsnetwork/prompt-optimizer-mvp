@@ -62,7 +62,7 @@ Please provide only the optimized prompt without any explanations or additional 
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'gpt-4o',
+        model: 'gpt-5',
         messages: [
           {
             role: 'user',
