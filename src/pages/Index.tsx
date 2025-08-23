@@ -324,36 +324,43 @@ This is a temporary mock response. To enable real AI optimization, you'll need t
           </header>
 
           {/* Main Content */}
-          <main className="flex-1 flex flex-col overflow-hidden">
-            {/* Chat Messages */}
-            <div ref={messagesContainerRef} className="flex-1 overflow-y-auto p-4 md:p-6">
+          <main className="flex-1 flex flex-col overflow-hidden relative">
+            {/* Subtle background pattern */}
+            <div className="absolute inset-0 opacity-[0.015] pointer-events-none">
+              <div className="absolute inset-0" style={{
+                backgroundImage: `radial-gradient(circle at 1px 1px, currentColor 1px, transparent 0)`,
+                backgroundSize: '24px 24px'
+              }}></div>
+            </div>
+                        {/* Chat Messages */}
+            <div ref={messagesContainerRef} className="flex-1 overflow-y-auto p-4 md:p-8">
               {messages.length === 0 ? (
-                                 <div className="flex flex-col items-center justify-center h-full text-center space-y-4">
-                   <div className="w-16 h-16 rounded-2xl flex items-center justify-center">
-                     <img 
-                       src="/lovable-uploads/722b49e2-7cef-4586-9667-7a7af907dd8a.png" 
-                       alt="Prompt Optimizer Logo" 
-                       className="w-12 h-12 object-cover"
-                     />
-                   </div>
-                  <div className="space-y-2">
-                    <h2 className="text-2xl font-semibold text-foreground">
+                <div className="flex flex-col items-center justify-center h-full text-center space-y-6">
+                  <div className="w-20 h-20 rounded-2xl flex items-center justify-center">
+                    <img 
+                      src="/lovable-uploads/722b49e2-7cef-4586-9667-7a7af907dd8a.png" 
+                      alt="Prompt Optimizer Logo" 
+                      className="w-16 h-16 object-cover"
+                    />
+                  </div>
+                  <div className="space-y-3 max-w-2xl">
+                    <h2 className="text-3xl md:text-4xl font-semibold text-foreground">
                       Welcome to AI Prompt Optimizer
                     </h2>
-                    <p className="text-muted-foreground max-w-md">
+                    <p className="text-lg text-muted-foreground">
                       Enter your prompt below and I'll help you optimize it for better AI responses.
                     </p>
                   </div>
                 </div>
               ) : (
-                <div className="max-w-4xl mx-auto space-y-6">
+                <div className="w-full max-w-6xl mx-auto space-y-6">
                   {messages.map((message, index) => (
                     <div
                       key={index}
                       className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
                     >
                       <div
-                        className={`max-w-[80%] p-4 rounded-2xl ${
+                        className={`max-w-[85%] md:max-w-[75%] p-4 md:p-6 rounded-2xl ${
                           message.role === 'user'
                             ? 'bg-primary text-primary-foreground'
                             : 'bg-muted text-foreground border border-border'
@@ -368,7 +375,7 @@ This is a temporary mock response. To enable real AI optimization, you'll need t
                   
                   {isOptimizing && (
                     <div className="flex justify-start">
-                      <div className="max-w-[80%] p-4 rounded-2xl bg-muted border border-border">
+                      <div className="max-w-[85%] md:max-w-[75%] p-4 md:p-6 rounded-2xl bg-muted border border-border">
                         <div className="flex items-center space-x-2">
                           <div className="animate-pulse flex space-x-1">
                             <div className="h-2 w-2 bg-primary rounded-full animate-bounce"></div>
@@ -388,14 +395,14 @@ This is a temporary mock response. To enable real AI optimization, you'll need t
             </div>
 
             {/* Input Area */}
-            <div className="border-t border-border p-4 md:p-6">
-              <div className="max-w-4xl mx-auto">
+            <div className="border-t border-border p-4 md:p-8">
+              <div className="w-full max-w-6xl mx-auto">
                 <div className="flex flex-col space-y-3">
                   <Textarea
                     placeholder="Enter your prompt here to optimize it..."
                     value={prompt}
                     onChange={(e) => setPrompt(e.target.value)}
-                    className="min-h-[100px] resize-none border-border focus:ring-2 focus:ring-primary/20"
+                    className="min-h-[120px] md:min-h-[140px] resize-none border-border focus:ring-2 focus:ring-primary/20"
                     onKeyDown={(e) => {
                       if (e.key === 'Enter' && !e.shiftKey) {
                         e.preventDefault();
