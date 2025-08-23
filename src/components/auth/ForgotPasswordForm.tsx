@@ -88,13 +88,13 @@ export const ForgotPasswordForm = () => {
         </p>
       </div>
 
-      <Button type="submit" disabled={loading} className="w-full">
+      <Button type="submit" disabled={loading} className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-medium transition-all duration-200 shadow-lg hover:shadow-xl">
         {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
         Send reset email
       </Button>
 
       <div className="text-center">
-        <Link to="/signin" className="text-sm text-primary hover:underline inline-flex items-center">
+        <Link to="/signin" className="text-sm text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 hover:underline transition-colors inline-flex items-center">
           <ArrowLeft className="mr-1 h-3 w-3" />
           Back to sign in
         </Link>
