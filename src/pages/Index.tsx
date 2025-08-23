@@ -10,6 +10,7 @@ import { Send, Sparkles, Menu, Copy, Check } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { useAuth } from "@/hooks/useAuth";
 
 
 interface ChatSession {
@@ -21,6 +22,7 @@ interface ChatSession {
 }
 
 const Index = () => {
+  const { user, loading } = useAuth();
   const [prompt, setPrompt] = useState("");
   const [messages, setMessages] = useState<Array<{ role: "user" | "assistant"; content: string }>>([]);
   const [isOptimizing, setIsOptimizing] = useState(false);
@@ -30,13 +32,16 @@ const Index = () => {
   const [editTitle, setEditTitle] = useState("");
   const [copiedMessageId, setCopiedMessageId] = useState<string | null>(null);
   const isMobile = useIsMobile();
+  console.log('Mobile detection:', isMobile); // Debug log
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const messagesContainerRef = useRef<HTMLDivElement>(null);
 
   // Load saved chat sessions from localStorage on component mount
   useEffect(() => {
+    console.log('Index component mounted, loading chat sessions...'); // Debug log
     try {
       const savedSessions = localStorage.getItem('prompt-optimizer-sessions');
+      console.log('Saved sessions from localStorage:', savedSessions); // Debug log
       if (savedSessions) {
         const parsed = JSON.parse(savedSessions);
         if (parsed && Array.isArray(parsed)) {
@@ -100,8 +105,20 @@ const Index = () => {
     return () => clearTimeout(timeoutId);
   }, [messages, isOptimizing]);
 
+  // Test if React is working properly
+  useEffect(() => {
+    console.log('Index component rendered with state:', {
+      prompt,
+      messages: messages.length,
+      isOptimizing,
+      chatSessions: chatSessions.length,
+      currentChatId,
+      isMobile
+    });
+  });
+
   const createNewChat = () => {
-    console.log('createNewChat called!'); // Debug log
+    console.log('createNewChat called!', { user, loading }); // Debug log
     const newChat: ChatSession = {
       id: `chat-${Date.now()}`,
       title: 'New Chat',
@@ -202,6 +219,7 @@ const Index = () => {
   };
 
   const handleOptimize = async () => {
+    console.log('handleOptimize called!', { prompt, user, loading }); // Debug log
     if (!prompt.trim()) return;
 
     // Create new chat if no current chat exists
@@ -346,6 +364,34 @@ This is a temporary mock response. To enable real AI optimization, you'll need t
 
           {/* Main Content */}
           <main className="flex-1 flex flex-col overflow-hidden relative">
+            {/* Debug Info - Remove this in production */}
+            {process.env.NODE_ENV === 'development' && (
+              <div className="absolute top-4 right-4 z-10 bg-yellow-100 border border-yellow-300 rounded p-2 text-xs max-w-xs">
+                <div className="font-semibold mb-1">🔧 Development Mode</div>
+                <div>Auth Status: {loading ? 'Loading...' : user ? 'Authenticated' : 'Not Authenticated'}</div>
+                <div>User: {user ? user.email : 'None'}</div>
+                <div className="mt-1 text-xs text-gray-600">
+                  Buttons should work now in dev mode
+                </div>
+                <Button 
+                  size="sm" 
+                  variant="outline" 
+                  className="mt-2 text-xs"
+                  onClick={() => {
+                    console.log('Testing Supabase connection...');
+                    import('@/integrations/supabase/client').then(({ supabase }) => {
+                      console.log('Supabase client:', supabase);
+                      supabase.auth.getSession().then(({ data, error }) => {
+                        console.log('Supabase session test:', { data, error });
+                      });
+                    });
+                  }}
+                >
+                  Test Supabase
+                </Button>
+              </div>
+            )}
+            
             {/* Subtle background pattern */}
             <div className="absolute inset-0 opacity-[0.015] pointer-events-none">
               <div className="absolute inset-0" style={{
@@ -459,7 +505,7 @@ This is a temporary mock response. To enable real AI optimization, you'll need t
             </div>
 
             {/* Input Area */}
-            <div className="border-t border-border p-4 md:p-8">
+            <div className="border-t border-border p-4 md:p-8 relative z-10">
               <div className="w-full px-4 md:px-8">
                 <div className="flex flex-col space-y-3">
                 <Textarea
@@ -478,14 +524,29 @@ This is a temporary mock response. To enable real AI optimization, you'll need t
                     <div className="text-xs text-muted-foreground">
                       Press Shift + Enter for new line
                     </div>
-                <Button 
-                  onClick={handleOptimize}
-                      disabled={!prompt.trim() || isOptimizing}
-                      className="flex items-center gap-2"
+                                <Button 
+                  onClick={(e) => {
+                    console.log('Button clicked!', e);
+                    try {
+                      handleOptimize();
+                    } catch (error) {
+                      console.error('Error in handleOptimize:', error);
+                    }
+                  }}
+                  disabled={!prompt.trim() || isOptimizing}
+                  className="flex items-center gap-2 relative z-20"
                 >
-                      <Send className="w-4 h-4" />
-                      {isOptimizing ? 'Optimizing...' : 'Optimize'}
+                  <Send className="w-4 h-4" />
+                  {isOptimizing ? 'Optimizing...' : 'Optimize'}
                 </Button>
+                
+                {/* Test button to see if Button component works */}
+                <button 
+                  onClick={() => console.log('Native button clicked!')}
+                  className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+                >
+                  Test Native Button
+                </button>
               </div>
                 </div>
               </div>
