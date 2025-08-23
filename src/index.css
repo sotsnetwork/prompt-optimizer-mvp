@@ -17,7 +17,7 @@
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 9%;
 
-    --primary: 142 76% 36%;
+    --primary: 221 83% 53%;
     --primary-foreground: 0 0% 98%;
 
     --secondary: 0 0% 96%;
@@ -34,7 +34,7 @@
 
     --border: 0 0% 90%;
     --input: 0 0% 90%;
-    --ring: 142 76% 36%;
+    --ring: 221 83% 53%;
 
     --radius: 0.75rem;
 
@@ -46,15 +46,15 @@
     --sidebar-accent: 0 0% 94%;
     --sidebar-accent-foreground: 0 0% 9%;
     --sidebar-border: 0 0% 90%;
-    --sidebar-ring: 142 76% 36%;
+    --sidebar-ring: 221 83% 53%;
 
     /* Custom app colors */
     --app-surface: 0 0% 100%;
     --app-surface-secondary: 0 0% 98%;
     --app-text-primary: 0 0% 9%;
     --app-text-secondary: 0 0% 45%;
-    --app-accent: 142 76% 36%;
-    --app-accent-hover: 142 76% 32%;
+    --app-accent: 221 83% 53%;
+    --app-accent-hover: 221 83% 48%;
     --app-shadow: 0 0% 84%;
   }
 
@@ -69,7 +69,7 @@
     --popover: 212 13% 12%;
     --popover-foreground: 0 0% 95%;
 
-    --primary: 142 76% 36%;
+    --primary: 221 83% 53%;
     --primary-foreground: 0 0% 9%;
 
     --secondary: 217 10% 25%;
@@ -86,7 +86,7 @@
 
     --border: 217 10% 25%;
     --input: 217 10% 25%;
-    --ring: 142 76% 36%;
+    --ring: 221 83% 53%;
 
     /* Dark sidebar colors */
     --sidebar-background: 212 13% 12%;
@@ -96,15 +96,15 @@
     --sidebar-accent: 217 10% 25%;
     --sidebar-accent-foreground: 0 0% 95%;
     --sidebar-border: 217 10% 25%;
-    --sidebar-ring: 142 76% 36%;
+    --sidebar-ring: 221 83% 53%;
 
     /* Custom app colors for dark theme */
     --app-surface: 212 13% 12%;
     --app-surface-secondary: 217 10% 25%;
     --app-text-primary: 0 0% 95%;
     --app-text-secondary: 215 20% 65%;
-    --app-accent: 142 76% 36%;
-    --app-accent-hover: 142 76% 40%;
+    --app-accent: 221 83% 53%;
+    --app-accent-hover: 221 83% 58%;
     --app-shadow: 212 13% 8%;
   }
 }
