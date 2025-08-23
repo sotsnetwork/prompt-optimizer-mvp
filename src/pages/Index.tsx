@@ -1,6 +1,6 @@
 
 import { useState, useEffect, useRef } from "react";
-import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
+
 import { AppSidebar } from "@/components/AppSidebar";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { UserMenu } from "@/components/UserMenu";
@@ -280,31 +280,30 @@ This is a temporary mock response. To enable real AI optimization, you'll need t
   );
 
   return (
-    <SidebarProvider>
-      <div className="flex h-screen bg-background">
-        {/* Navigation Sidebar */}
-        {isMobile ? (
-          <Sheet>
-            <SheetTrigger asChild>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="fixed top-4 left-4 z-50 md:hidden"
-              >
-                <Menu className="h-5 w-5" />
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="left" className="p-0 w-64">
-              <SidebarComponent />
-            </SheetContent>
-          </Sheet>
-        ) : (
-          <SidebarComponent />
-        )}
+    <div className="flex h-screen bg-background">
+      {/* Navigation Sidebar */}
+      {isMobile ? (
+        <Sheet>
+          <SheetTrigger asChild>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="fixed top-4 left-4 z-50 md:hidden"
+            >
+              <Menu className="h-5 w-5" />
+            </Button>
+          </SheetTrigger>
+          <SheetContent side="left" className="p-0 w-64">
+            <SidebarComponent />
+          </SheetContent>
+        </Sheet>
+      ) : (
+        <SidebarComponent />
+      )}
 
 
 
-        <SidebarInset className="flex-1 flex flex-col">
+      <div className="flex-1 flex flex-col">
           {/* Header */}
           <header className="flex h-16 shrink-0 items-center justify-between border-b border-border px-4 md:px-6">
             <div className="flex items-center gap-3">
@@ -499,9 +498,8 @@ This is a temporary mock response. To enable real AI optimization, you'll need t
               </p>
             </div>
           </main>
-        </SidebarInset>
+        </div>
       </div>
-    </SidebarProvider>
   );
 };
 
