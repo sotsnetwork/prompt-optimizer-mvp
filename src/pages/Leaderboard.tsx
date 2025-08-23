@@ -47,107 +47,7 @@ interface LeaderboardUser {
   }[];
 }
 
-const mockLeaderboard: LeaderboardUser[] = [
-  {
-    id: "1",
-    username: "PromptMaster",
-    avatar: "/api/avatars/promptmaster",
-    rank: 1,
-    points: 2847,
-    level: "Grandmaster",
-    badges: ["🏆", "🔥", "💎", "🚀"],
-    stats: {
-      promptsSubmitted: 47,
-      promptsVoted: 156,
-      totalVotes: 892,
-      averageScore: 94.2,
-      streak: 23
-    },
-    achievements: [
-      { id: "1", name: "First Place", description: "Reached #1 on the leaderboard", icon: "🏆", unlockedAt: "2024-01-15" },
-      { id: "2", name: "Streak Master", description: "Maintained 20+ day streak", icon: "🔥", unlockedAt: "2024-01-10" },
-      { id: "3", name: "Community Pillar", description: "Received 500+ votes", icon: "💎", unlockedAt: "2024-01-05" }
-    ]
-  },
-  {
-    id: "2",
-    username: "CreativeCoach",
-    avatar: "/api/avatars/creativecoach",
-    rank: 2,
-    points: 2653,
-    level: "Master",
-    badges: ["🥈", "🔥", "💎"],
-    stats: {
-      promptsSubmitted: 38,
-      promptsVoted: 134,
-      totalVotes: 756,
-      averageScore: 91.8,
-      streak: 18
-    },
-    achievements: [
-      { id: "1", name: "Second Place", description: "Reached #2 on the leaderboard", icon: "🥈", unlockedAt: "2024-01-14" },
-      { id: "2", name: "Creative Genius", description: "Submitted 30+ creative prompts", icon: "🎨", unlockedAt: "2024-01-08" }
-    ]
-  },
-  {
-    id: "3",
-    username: "DataWizard",
-    avatar: "/api/avatars/datawizard",
-    rank: 3,
-    points: 2489,
-    level: "Expert",
-    badges: ["🥉", "🔥"],
-    stats: {
-      promptsSubmitted: 42,
-      promptsVoted: 98,
-      totalVotes: 623,
-      averageScore: 89.5,
-      streak: 15
-    },
-    achievements: [
-      { id: "1", name: "Third Place", description: "Reached #3 on the leaderboard", icon: "🥉", unlockedAt: "2024-01-13" },
-      { id: "2", name: "Data Expert", description: "Submitted 25+ data science prompts", icon: "📊", unlockedAt: "2024-01-06" }
-    ]
-  },
-  {
-    id: "4",
-    username: "AIExplorer",
-    avatar: "/api/avatars/aiexplorer",
-    rank: 4,
-    points: 2312,
-    level: "Expert",
-    badges: ["🔥"],
-    stats: {
-      promptsSubmitted: 35,
-      promptsVoted: 87,
-      totalVotes: 534,
-      averageScore: 87.3,
-      streak: 12
-    },
-    achievements: [
-      { id: "1", name: "Explorer", description: "Submitted prompts in 10+ categories", icon: "🗺️", unlockedAt: "2024-01-12" }
-    ]
-  },
-  {
-    id: "5",
-    username: "PromptCraft",
-    avatar: "/api/avatars/promptcraft",
-    rank: 5,
-    points: 2156,
-    level: "Advanced",
-    badges: ["🔥"],
-    stats: {
-      promptsSubmitted: 29,
-      promptsVoted: 76,
-      totalVotes: 487,
-      averageScore: 85.9,
-      streak: 9
-    },
-    achievements: [
-      { id: "1", name: "Craftsman", description: "Submitted 25+ high-quality prompts", icon: "⚒️", unlockedAt: "2024-01-11" }
-    ]
-  }
-];
+const mockLeaderboard: LeaderboardUser[] = [];
 
 const achievements = [
   { id: "1", name: "First Steps", description: "Submit your first prompt", icon: "👣", points: 10, unlocked: true },
@@ -308,8 +208,24 @@ export default function Leaderboard() {
                       </CardDescription>
                     </CardHeader>
                     <CardContent>
-                      <div className="space-y-4">
-                        {mockLeaderboard.map((user, index) => (
+                      {mockLeaderboard.length === 0 ? (
+                        <div className="text-center py-12 space-y-4">
+                          <div className="w-16 h-16 mx-auto bg-muted rounded-full flex items-center justify-center">
+                            <Trophy className="h-8 w-8 text-muted-foreground" />
+                          </div>
+                          <div>
+                            <h3 className="text-lg font-semibold text-foreground">No Rankings Yet</h3>
+                            <p className="text-sm text-muted-foreground">
+                              Be the first to submit prompts and climb the leaderboard!
+                            </p>
+                          </div>
+                          <Button className="mt-4">
+                            Submit Your First Prompt
+                          </Button>
+                        </div>
+                      ) : (
+                        <div className="space-y-4">
+                          {mockLeaderboard.map((user, index) => (
                           <div key={user.id} className="flex items-center gap-4 p-4 rounded-lg border border-border hover:bg-muted/50 transition-colors">
                             {/* Rank */}
                             <div className="flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 text-white font-bold text-lg">
@@ -354,6 +270,7 @@ export default function Leaderboard() {
                             </Button>
                           </div>
                         ))}
+                        )}
                       </div>
                     </CardContent>
                   </Card>
@@ -409,45 +326,45 @@ export default function Leaderboard() {
                       <CardContent className="space-y-6">
                         {/* Current Level */}
                         <div className="text-center space-y-4">
-                          <div className="w-20 h-20 mx-auto bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-2xl font-bold text-white">
+                          <div className="w-20 h-20 mx-auto bg-muted rounded-full flex items-center justify-center text-2xl font-bold text-muted-foreground">
                             🚀
                           </div>
                           <div>
-                            <h3 className="text-lg font-semibold text-foreground">Advanced</h3>
-                            <p className="text-sm text-muted-foreground">1,247 points</p>
+                            <h3 className="text-lg font-semibold text-foreground">Beginner</h3>
+                            <p className="text-sm text-muted-foreground">0 points</p>
                           </div>
                         </div>
 
                         {/* Progress Bar */}
                         <div className="space-y-2">
                           <div className="flex justify-between text-sm">
-                            <span>Progress to Expert</span>
-                            <span>67%</span>
+                            <span>Progress to Advanced</span>
+                            <span>0%</span>
                           </div>
                           <div className="w-full bg-gray-200 rounded-full h-2">
-                            <div className="bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full" style={{ width: '67%' }}></div>
+                            <div className="bg-muted h-2 rounded-full" style={{ width: '0%' }}></div>
                           </div>
                           <p className="text-xs text-muted-foreground">
-                            253 points needed for next level
+                            Start submitting prompts to earn points!
                           </p>
                         </div>
 
                         {/* Quick Stats */}
                         <div className="grid grid-cols-2 gap-4">
                           <div className="text-center p-3 rounded-lg bg-muted">
-                            <div className="text-2xl font-bold text-blue-600">23</div>
+                            <div className="text-2xl font-bold text-muted-foreground">0</div>
                             <div className="text-xs text-muted-foreground">Prompts</div>
                           </div>
                           <div className="text-center p-3 rounded-lg bg-muted">
-                            <div className="text-2xl font-bold text-green-600">156</div>
+                            <div className="text-2xl font-bold text-muted-foreground">0</div>
                             <div className="text-xs text-muted-foreground">Votes</div>
                           </div>
                           <div className="text-center p-3 rounded-lg bg-muted">
-                            <div className="text-2xl font-bold text-purple-600">12</div>
+                            <div className="text-2xl font-bold text-muted-foreground">0</div>
                             <div className="text-xs text-muted-foreground">Streak</div>
                           </div>
                           <div className="text-center p-3 rounded-lg bg-muted">
-                            <div className="text-2xl font-bold text-orange-600">8</div>
+                            <div className="text-2xl font-bold text-muted-foreground">0</div>
                             <div className="text-xs text-muted-foreground">Achievements</div>
                           </div>
                         </div>
@@ -470,35 +387,15 @@ export default function Leaderboard() {
                         </CardDescription>
                       </CardHeader>
                       <CardContent>
-                        <div className="space-y-4">
-                          <div className="p-4 rounded-lg border border-border bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-950/20 dark:to-purple-950/20">
-                            <div className="flex items-center gap-2 mb-2">
-                              <Rocket className="h-5 w-5 text-blue-600" />
-                              <h4 className="font-semibold text-foreground">Prompt Innovation Challenge</h4>
-                            </div>
-                            <p className="text-sm text-muted-foreground mb-3">
-                              Create the most innovative prompt for creative writing. 
-                              Winner gets featured on the homepage and 500 bonus points!
-                            </p>
-                            <div className="flex items-center justify-between">
-                              <Badge variant="default">Active</Badge>
-                              <span className="text-sm text-muted-foreground">3 days left</span>
-                            </div>
+                        <div className="text-center py-12 space-y-4">
+                          <div className="w-16 h-16 mx-auto bg-muted rounded-full flex items-center justify-center">
+                            <Flame className="h-8 w-8 text-muted-foreground" />
                           </div>
-
-                          <div className="p-4 rounded-lg border border-border bg-gradient-to-r from-green-50 to-blue-50 dark:from-green-950/20 dark:to-blue-950/20">
-                            <div className="flex items-center gap-2 mb-2">
-                              <Gem className="h-5 w-5 text-green-600" />
-                              <h4 className="font-semibold text-foreground">Data Science Mastery</h4>
-                            </div>
-                            <p className="text-sm text-muted-foreground mb-3">
-                              Submit the best data analysis prompt. 
-                              Top 3 winners receive exclusive badges and community recognition.
+                          <div>
+                            <h3 className="text-lg font-semibold text-foreground">No Active Competitions</h3>
+                            <p className="text-sm text-muted-foreground">
+                              Check back soon for exciting challenges and competitions!
                             </p>
-                            <div className="flex items-center justify-between">
-                              <Badge variant="default">Active</Badge>
-                              <span className="text-sm text-muted-foreground">1 week left</span>
-                            </div>
                           </div>
                         </div>
                       </CardContent>
@@ -516,29 +413,15 @@ export default function Leaderboard() {
                         </CardDescription>
                       </CardHeader>
                       <CardContent>
-                        <div className="space-y-4">
-                          <div className="p-4 rounded-lg border border-border">
-                            <h4 className="font-semibold text-foreground mb-2">Business Strategy Prompts</h4>
-                            <p className="text-sm text-muted-foreground mb-3">
-                              Focus on business and strategy prompts. 
-                              Perfect for consultants and entrepreneurs.
-                            </p>
-                            <div className="flex items-center justify-between">
-                              <Badge variant="secondary">Coming Soon</Badge>
-                              <span className="text-sm text-muted-foreground">Starts in 5 days</span>
-                            </div>
+                        <div className="text-center py-12 space-y-4">
+                          <div className="w-16 h-16 mx-auto bg-muted rounded-full flex items-center justify-center">
+                            <Star className="h-8 w-8 text-muted-foreground" />
                           </div>
-
-                          <div className="p-4 rounded-lg border border-border">
-                            <h4 className="font-semibold text-foreground mb-2">Educational Excellence</h4>
-                            <p className="text-sm text-muted-foreground mb-3">
-                              Create prompts for teachers and students. 
-                              Help revolutionize AI in education.
+                          <div>
+                            <h3 className="text-lg font-semibold text-foreground">No Upcoming Competitions</h3>
+                            <p className="text-sm text-muted-foreground">
+                              We're planning exciting new challenges. Stay tuned!
                             </p>
-                            <div className="flex items-center justify-between">
-                              <Badge variant="secondary">Coming Soon</Badge>
-                              <span className="text-sm text-muted-foreground">Starts in 2 weeks</span>
-                            </div>
                           </div>
                         </div>
                       </CardContent>
