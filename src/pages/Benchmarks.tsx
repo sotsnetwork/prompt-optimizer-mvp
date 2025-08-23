@@ -24,7 +24,9 @@ import {
   Save,
   Share2,
   ThumbsUp,
-  MessageSquare
+  MessageSquare,
+  Copy,
+  Check
 } from "lucide-react";
 
 interface PromptBenchmark {
@@ -82,6 +84,7 @@ export default function Benchmarks() {
   const [selectedModelForTest, setSelectedModelForTest] = useState<string>("gpt-5");
   const [testResults, setTestResults] = useState<any>(null);
   const [isTesting, setIsTesting] = useState(false);
+  const [copiedPrompt, setCopiedPrompt] = useState(false);
 
   const filteredBenchmarks = benchmarks
     .filter(b => selectedModel === "all" || b.model.toLowerCase().includes(selectedModel.toLowerCase()))
@@ -113,6 +116,25 @@ export default function Benchmarks() {
     setBenchmarks(prev => prev.map(b => 
       b.id === benchmarkId ? { ...b, votes: b.votes + 1 } : b
     ));
+  };
+
+  const handleCopyPrompt = async (content: string) => {
+    try {
+      await navigator.clipboard.writeText(content);
+      setCopiedPrompt(true);
+      setTimeout(() => setCopiedPrompt(false), 2000);
+    } catch (error) {
+      console.error('Failed to copy text:', error);
+      // Fallback for older browsers
+      const textArea = document.createElement('textarea');
+      textArea.value = content;
+      document.body.appendChild(textArea);
+      textArea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textArea);
+      setCopiedPrompt(true);
+      setTimeout(() => setCopiedPrompt(false), 2000);
+    }
   };
 
   return (
@@ -397,6 +419,36 @@ export default function Benchmarks() {
                       {testResults && (
                         <div className="border-t pt-6">
                           <h3 className="text-lg font-semibold mb-4">Test Results</h3>
+                          
+                          {/* Prompt Display with Copy */}
+                          <div className="mb-6">
+                            <div className="flex items-center justify-between mb-2">
+                              <Label className="text-sm font-medium">Tested Prompt</Label>
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                onClick={() => handleCopyPrompt(testResults.prompt)}
+                                className="h-8 px-2"
+                              >
+                                {copiedPrompt ? (
+                                  <>
+                                    <Check className="h-4 w-4 mr-1 text-green-600" />
+                                    Copied!
+                                  </>
+                                ) : (
+                                  <>
+                                    <Copy className="h-4 w-4 mr-1" />
+                                    Copy
+                                  </>
+                                )}
+                              </Button>
+                            </div>
+                            <div className="p-3 bg-muted rounded-lg border">
+                              <p className="text-sm text-foreground whitespace-pre-wrap">
+                                {testResults.prompt}
+                              </p>
+                            </div>
+                          </div>
                           <div className="grid grid-cols-5 gap-4">
                             <div className="text-center">
                               <div className="text-2xl font-bold text-blue-600">
