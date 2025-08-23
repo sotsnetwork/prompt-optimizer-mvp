@@ -101,6 +101,7 @@ const Index = () => {
   }, [messages, isOptimizing]);
 
   const createNewChat = () => {
+    console.log('createNewChat called!'); // Debug log
     const newChat: ChatSession = {
       id: `chat-${Date.now()}`,
       title: 'New Chat',
@@ -146,6 +147,7 @@ const Index = () => {
   };
 
   const clearAllChats = () => {
+    console.log('clearAllChats called!'); // Debug log
     setChatSessions([]);
     setCurrentChatId(null);
     setMessages([]);
