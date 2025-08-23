@@ -46,62 +46,7 @@ interface PromptBenchmark {
   tags: string[];
 }
 
-const mockBenchmarks: PromptBenchmark[] = [
-  {
-    id: "1",
-    prompt: "You are an expert prompt engineer. Your task is to optimize the following prompt to make it more effective, clear, and likely to produce better results from AI models. Guidelines: Make it specific, add context, improve clarity, structure logically, use clear language. Original: {user_input}",
-    model: "GPT-4",
-    category: "Prompt Engineering",
-    metrics: {
-      clarity: 95,
-      effectiveness: 92,
-      creativity: 88,
-      consistency: 94,
-      overall: 92.25
-    },
-    votes: 127,
-    comments: 23,
-    author: "PromptMaster",
-    timestamp: "2024-01-15T10:30:00Z",
-    tags: ["prompt-engineering", "optimization", "best-practices"]
-  },
-  {
-    id: "2",
-    prompt: "Act as a creative writing coach. Analyze the following text and provide specific, actionable feedback on: 1) Character development and dialogue 2) Plot structure and pacing 3) Descriptive language and imagery 4) Theme and message. Be encouraging but honest, and suggest concrete improvements.",
-    model: "Claude-3",
-    category: "Creative Writing",
-    metrics: {
-      clarity: 89,
-      effectiveness: 94,
-      creativity: 96,
-      consistency: 91,
-      overall: 92.5
-    },
-    votes: 89,
-    comments: 15,
-    author: "CreativeCoach",
-    timestamp: "2024-01-14T15:45:00Z",
-    tags: ["creative-writing", "feedback", "coaching"]
-  },
-  {
-    id: "3",
-    prompt: "You are a data scientist. Given a dataset, please: 1) Perform exploratory data analysis 2) Identify key patterns and insights 3) Suggest appropriate visualization techniques 4) Recommend next steps for analysis. Format your response with clear sections and actionable insights.",
-    model: "GPT-4",
-    category: "Data Science",
-    metrics: {
-      clarity: 91,
-      effectiveness: 93,
-      creativity: 85,
-      consistency: 96,
-      overall: 91.25
-    },
-    votes: 156,
-    comments: 31,
-    author: "DataWizard",
-    timestamp: "2024-01-13T09:15:00Z",
-    tags: ["data-science", "analysis", "visualization"]
-  }
-];
+const mockBenchmarks: PromptBenchmark[] = [];
 
 const models = [
   { id: "gpt-4", name: "GPT-4", provider: "OpenAI" },
@@ -269,8 +214,24 @@ export default function Benchmarks() {
                   </div>
 
                   {/* Leaderboard */}
-                  <div className="space-y-4">
-                    {filteredBenchmarks.map((benchmark, index) => (
+                  {filteredBenchmarks.length === 0 ? (
+                    <div className="text-center py-16 space-y-4">
+                      <div className="w-20 h-20 mx-auto bg-muted rounded-full flex items-center justify-center">
+                        <BarChart3 className="h-10 w-10 text-muted-foreground" />
+                      </div>
+                      <div>
+                        <h3 className="text-xl font-semibold text-foreground">No Benchmarks Yet</h3>
+                        <p className="text-muted-foreground">
+                          Be the first to submit a prompt for benchmarking!
+                        </p>
+                      </div>
+                      <Button className="mt-4">
+                        Submit Your First Prompt
+                      </Button>
+                    </div>
+                  ) : (
+                    <div className="space-y-4">
+                      {filteredBenchmarks.map((benchmark, index) => (
                       <Card key={benchmark.id} className="hover:shadow-md transition-shadow">
                         <CardContent className="p-6">
                           <div className="flex items-start justify-between">
@@ -371,6 +332,7 @@ export default function Benchmarks() {
                         </CardContent>
                       </Card>
                     ))}
+                    )}
                   </div>
                 </TabsContent>
 
