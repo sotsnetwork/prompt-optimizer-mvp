@@ -160,8 +160,8 @@ const Index = () => {
                   </div>
                 </div>
               )}
-              </div>
             </div>
+          </div>
           </main>
         </SidebarInset>
       </div>
