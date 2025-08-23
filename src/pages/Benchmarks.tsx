@@ -124,11 +124,11 @@ export default function Benchmarks() {
               <h1 className="text-xl font-semibold text-foreground">Prompt Benchmarks</h1>
             </div>
             <div className="flex items-center gap-2">
-              <ThemeToggle />
+            <ThemeToggle />
               <UserMenu />
             </div>
           </header>
-
+          
           <main className="flex-1 overflow-auto p-6">
             <div className="max-w-7xl mx-auto space-y-6">
               {/* Hero Section */}
@@ -143,7 +143,7 @@ export default function Benchmarks() {
                 <div className="flex items-center justify-center gap-4 text-sm text-muted-foreground">
                   <div className="flex items-center gap-2">
                     <Users className="h-4 w-4" />
-                    <span>1,247 prompts tested</span>
+                    <span>0 prompts tested</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <Zap className="h-4 w-4" />
@@ -151,7 +151,7 @@ export default function Benchmarks() {
                   </div>
                   <div className="flex items-center gap-2">
                     <Star className="h-4 w-4" />
-                    <span>89% success rate</span>
+                    <span>0% success rate</span>
                   </div>
                 </div>
               </div>
@@ -221,7 +221,7 @@ export default function Benchmarks() {
                       </div>
                       <div>
                         <h3 className="text-xl font-semibold text-foreground">No Benchmarks Yet</h3>
-                        <p className="text-muted-foreground">
+                <p className="text-muted-foreground">
                           Be the first to submit a prompt for benchmarking!
                         </p>
                       </div>
@@ -307,8 +307,8 @@ export default function Benchmarks() {
                                   {benchmark.votes}
                                 </div>
                                 <div className="text-xs text-muted-foreground">votes</div>
-                              </div>
-                              
+              </div>
+
                               <div className="flex gap-2">
                                 <Button
                                   variant="outline"
@@ -329,21 +329,21 @@ export default function Benchmarks() {
                               </div>
                             </div>
                           </div>
-                        </CardContent>
-                      </Card>
+                  </CardContent>
+                </Card>
                     ))}
-                    </div>
+              </div>
                   )}
                 </TabsContent>
 
                 <TabsContent value="test" className="space-y-6">
                   <Card>
-                    <CardHeader>
+                  <CardHeader>
                       <CardTitle>Test Your Prompt</CardTitle>
-                      <CardDescription>
+                    <CardDescription>
                         Test how well your prompt performs across different AI models and get detailed metrics.
-                      </CardDescription>
-                    </CardHeader>
+                    </CardDescription>
+                  </CardHeader>
                     <CardContent className="space-y-6">
                       <div className="space-y-4">
                         <div>
@@ -371,7 +371,7 @@ export default function Benchmarks() {
                               ))}
                             </SelectContent>
                           </Select>
-                        </div>
+                      </div>
 
                         <Button 
                           onClick={handleTestPrompt} 
@@ -419,14 +419,14 @@ export default function Benchmarks() {
                                 {testResults.metrics.consistency}
                               </div>
                               <div className="text-xs text-muted-foreground">Consistency</div>
-                            </div>
+                                </div>
                             <div className="text-center">
                               <div className="text-2xl font-bold text-yellow-600">
                                 {testResults.metrics.overall}
                               </div>
                               <div className="text-xs text-muted-foreground">Overall</div>
+                              </div>
                             </div>
-                          </div>
                           
                           <div className="mt-4 space-y-2">
                             <div className="flex justify-between text-sm">
@@ -446,20 +446,20 @@ export default function Benchmarks() {
                               Share
                             </Button>
                           </div>
-                        </div>
-                      )}
-                    </CardContent>
-                  </Card>
+                      </div>
+                    )}
+                  </CardContent>
+                </Card>
                 </TabsContent>
 
                 <TabsContent value="submit" className="space-y-6">
                   <Card>
-                    <CardHeader>
+                  <CardHeader>
                       <CardTitle>Submit Your Prompt</CardTitle>
-                      <CardDescription>
+                    <CardDescription>
                         Share your best prompts with the community and help others discover effective AI interactions.
-                      </CardDescription>
-                    </CardHeader>
+                    </CardDescription>
+                  </CardHeader>
                     <CardContent className="space-y-6">
                       <div className="space-y-4">
                         <div>
@@ -469,7 +469,7 @@ export default function Benchmarks() {
                             placeholder="Enter your prompt here..."
                             className="min-h-[120px] mt-2"
                           />
-                        </div>
+                              </div>
 
                         <div className="grid grid-cols-2 gap-4">
                           <div>
@@ -486,7 +486,7 @@ export default function Benchmarks() {
                                 ))}
                               </SelectContent>
                             </Select>
-                          </div>
+                            </div>
 
                           <div>
                             <Label htmlFor="tags">Tags</Label>
@@ -495,8 +495,8 @@ export default function Benchmarks() {
                               placeholder="e.g., prompt-engineering, optimization"
                               className="mt-2"
                             />
+                            </div>
                           </div>
-                        </div>
 
                         <div>
                           <Label htmlFor="description">Description</Label>
@@ -512,8 +512,8 @@ export default function Benchmarks() {
                           Submit Prompt
                         </Button>
                       </div>
-                    </CardContent>
-                  </Card>
+                  </CardContent>
+                </Card>
                 </TabsContent>
               </Tabs>
             </div>
