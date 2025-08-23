@@ -81,7 +81,7 @@ export default function Benchmarks() {
   const [selectedCategory, setSelectedCategory] = useState<string>("All Categories");
   const [sortBy, setSortBy] = useState<string>("overall");
   const [newPrompt, setNewPrompt] = useState("");
-  const [selectedModelForTest, setSelectedModelForTest] = useState<string>("gpt-5");
+  const [selectedModelForTest, setSelectedModelForTest] = useState<string>("gpt-4");
   const [testResults, setTestResults] = useState<any>(null);
   const [isTesting, setIsTesting] = useState(false);
   const [copiedPrompt, setCopiedPrompt] = useState(false);
