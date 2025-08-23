@@ -1,11 +1,11 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useAuth } from '@/hooks/useAuth';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Eye, EyeOff, Loader2 } from 'lucide-react';
 
 export const SignUpForm = () => {
@@ -14,8 +14,16 @@ export const SignUpForm = () => {
   const [fullName, setFullName] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-  const { signUp } = useAuth();
+  const { signUp, user } = useAuth();
   const { toast } = useToast();
+  const navigate = useNavigate();
+
+  // Redirect to main app if user is already authenticated
+  useEffect(() => {
+    if (user) {
+      navigate('/', { replace: true });
+    }
+  }, [user, navigate]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -29,14 +37,15 @@ export const SignUpForm = () => {
         description: error.message,
         variant: 'destructive',
       });
+      setLoading(false);
     } else {
       toast({
         title: 'Success',
         description: 'Account created! Please check your email for verification.',
       });
+      // The useEffect will handle the redirect when user state updates
+      setLoading(false);
     }
-    
-    setLoading(false);
   };
 
   return (
