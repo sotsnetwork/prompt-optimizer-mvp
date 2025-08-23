@@ -76,50 +76,66 @@ const Index = () => {
           </header>
 
           
-          <main className="flex-1 overflow-auto p-6">
-            <div className="max-w-4xl mx-auto space-y-6">
-              <div className="text-center space-y-2">
-                <h1 className="text-3xl font-bold text-foreground">AI Prompt Optimizer</h1>
-                <p className="text-muted-foreground">
+          <main className="flex-1 overflow-auto p-8">
+            <div className="max-w-6xl mx-auto space-y-8">
+              <div className="text-center space-y-4">
+                <h1 className="text-5xl font-bold text-foreground bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                  AI Prompt Optimizer
+                </h1>
+                <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
                   Transform your prompts into more effective, precise instructions for better AI results
                 </p>
               </div>
 
-              <div className="space-y-4">
-                <Textarea
-                  placeholder="Enter your raw prompt here..."
-                  value={rawPrompt}
-                  onChange={(e) => setRawPrompt(e.target.value)}
-                  className="min-h-[200px] resize-none"
-                />
+              <div className="space-y-6">
+                <div className="relative">
+                  <Textarea
+                    placeholder="Enter your raw prompt here..."
+                    value={rawPrompt}
+                    onChange={(e) => setRawPrompt(e.target.value)}
+                    className="min-h-[300px] resize-none text-lg p-6 border-2 border-border/50 focus:border-primary/50 transition-all duration-200 rounded-xl shadow-sm"
+                  />
+                  <div className="absolute bottom-4 right-4 text-xs text-muted-foreground bg-background/80 px-2 py-1 rounded">
+                    {rawPrompt.length} characters
+                  </div>
+                </div>
                 
                 <Button 
                   onClick={handleOptimize}
                   disabled={isOptimizing || !rawPrompt.trim()}
-                  className="w-full"
+                  className="w-full h-14 text-lg font-semibold bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 transition-all duration-200 shadow-lg hover:shadow-xl"
                   size="lg"
                 >
-                  <Sparkles className="mr-2 h-5 w-5" />
+                  <Sparkles className="mr-3 h-6 w-6" />
                   {isOptimizing ? "Optimizing..." : "Optimize Prompt"}
                 </Button>
               </div>
 
-              <div className="grid gap-6 md:grid-cols-2">
-                <PromptCard
-                  title="Raw Prompt"
-                  content={rawPrompt || "Your original prompt will appear here..."}
-                />
-                <div className="relative">
-                  <PromptCard
-                    title="Optimized Prompt"
-                    content={optimizedPrompt || "Your optimized prompt will appear here..."}
-                  />
+              <div className="grid gap-8 md:grid-cols-2">
+                <div className="bg-card border-2 border-border/50 rounded-xl p-6 shadow-sm">
+                  <h3 className="text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+                    <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
+                    Raw Prompt
+                  </h3>
+                  <div className="min-h-[200px] p-4 bg-muted/30 rounded-lg text-muted-foreground">
+                    {rawPrompt || "Your original prompt will appear here..."}
+                  </div>
+                </div>
+                
+                <div className="bg-card border-2 border-border/50 rounded-xl p-6 shadow-sm relative">
+                  <h3 className="text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+                    <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                    Optimized Prompt
+                  </h3>
+                  <div className="min-h-[200px] p-4 bg-muted/30 rounded-lg text-muted-foreground">
+                    {optimizedPrompt || "Your optimized prompt will appear here..."}
+                  </div>
                   {optimizedPrompt && (
                     <Button
                       onClick={handleCopyOptimized}
                       variant="outline"
                       size="sm"
-                      className="absolute top-4 right-4"
+                      className="absolute top-6 right-6"
                     >
                       {copiedOptimized ? (
                         <Check className="h-4 w-4" />
